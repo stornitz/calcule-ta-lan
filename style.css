@@ -1,0 +1,30 @@
+.ui.container > h1 {
+  font-size: 3em;
+  text-align: center;
+  font-weight: normal;
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+
+#res {
+  font-size: 2em;
+  float: right;
+  margin-bottom: 2em;
+}
+
+.ui.list > .item::before {
+  content: "+ "
+}
+
+.ui.list > .item:first-child::before {
+  content: ""
+}
+
+.ui.list > .item:last-child::before {
+  content: "= "
+}
+
+.item > .label {
+  min-width: 40px;
+  text-align: center;
+}

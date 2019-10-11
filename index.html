@@ -1,0 +1,209 @@
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Calcule ta LAN !</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+    <div id="app">
+    <div class="ui container">
+      <h1>Calcule ta LAN+24H du jeu</h1>
+    <div class="ui three column stackable grid">
+      <div class="ui column">
+          <h1 class="ui dividing header">Cotisations</h1>
+          <div class="ui form">
+            <div class="grouped fields">
+              <label for="fruit">AirEISTI : </label>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" value="1" v-model.number="air">
+                  <label>Cotisant</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" value="0" v-model.number="air">
+                  <label>Non cotisant</label>
+                </div>
+              </div>
+            </div>
+            <div class="grouped fields">
+              <label for="fruit">VeistiJeu : </label>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="vestij" value="1" v-model.number="vestij">
+                  <label>Cotisant</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="vestij" value="0" v-model.number="vestij">
+                  <label>Non cotisant</label>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui column">
+          <h1 class="ui dividing header">Tournois</h1>
+        <div class="ui form">
+            <div class="grouped fields">
+              <div class="inline field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="TFT">
+                  <label>TFT</label>
+                </div>
+              </div>
+              <div class="inline field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="KTP">
+                  <label>KTP</label>
+                </div>
+              </div>
+              <div class="inline field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="Wingman">
+                  <label>Wingman</label>
+                </div>
+              </div>
+              <div class="inline field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="Smash">
+                  <label>Smash</label>
+                </div>
+              </div>
+              <div class="inline field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="CallOf">
+                  <label>CallOf</label>
+                </div>
+              </div>
+              <div class="inline field">
+                <div class="ui checkbox">
+                  <input type="checkbox" v-model="Poker">
+                  <label>Poker</label>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="ui column">
+          <h1 class="ui dividing header">Nourriture</h1>
+        <div class="ui form">
+            <div class="grouped fields">
+              <div class="field">
+                <label>Pizzas L</label>
+                <input type="number" min="0" value="0" v-model.number="pizzal">
+              </div>
+              <div class="ui checkbox">
+                <input type="checkbox" :checked="this.pizzal>0" disabled>
+                <label>Livraison ({{ this.pizzal*0.5 }}€)</label>
+              </div>
+              <div class="field">
+                <label>Pizzas M</label>
+                <input type="number" min="0" value="0" v-model.number="pizzam">
+              </div>
+              <div class="ui checkbox">
+                <input type="checkbox" :checked="this.pizzam>0"  disabled>
+                <label>Livraison ({{ this.pizzam*0.5 }}€)</label>
+              </div>
+              <div class="field">
+                <label>Kebab / Tacos</label>
+                <input type="number" min="0" value="0" v-model.number="kebab">
+              </div>
+              <div class="ui checkbox">
+                <input type="checkbox" :checked="this.kebab>0"  disabled>
+                <label>Livraison ({{ this.kebab*0.5 }}€)</label>
+              </div>
+              <div class="field">
+                <label>Croques MR</label>
+                <input type="number" min="0" value="0" v-model.number="croques">
+              </div>
+              <div class="field">
+                  <label>Sandwichs</label>
+                  <input type="number" min="0" value="0" v-model.number="sand">
+                </div>
+              <div class="field">
+                  <label>Sandwichs (Samedi midi)</label>
+                  <input type="number" min="0" value="0" v-model.number="sandsam">
+                </div>
+            </div>
+        </div>
+      </div>
+      </div>
+    <h2 class="ui dividing header">Total</h2>
+    <div class="ui list">
+      <div class="item">
+        <div class="ui red label">4 €</div>
+        Entrée
+      </div>
+      <div v-if="!!this.air" class="item">
+          <div class="ui green label">-1 €</div>
+          Réduction entrée AirEISTI
+      </div>
+      <div v-if="!!this.vestij" class="item">
+          <div class="ui green label">-1 €</div>
+          Réduction entrée VestiJeu
+      </div>
+      <div class="item">
+        <div class="ui red label">2 €</div>
+        Internet
+      </div>
+      <div v-if="!!this.air" class="item">
+          <div class="ui green label">-2 €</div>
+          Réduction internet AirEISTI
+      </div>
+      <div class="item" v-for="nom in nomtournois">
+        <div class="ui red label">1 €</div>
+        Tournoi {{ nom }}
+      </div>
+      <div class="item" v-if="this.tournois > 0 && !!this.air">
+        <div class="ui green label">-1 €</div>
+        Tournoi offert AirEISTI
+      </div>
+      <div class="item" v-if="pizzal > 0">
+        <div class="ui red label">{{ 8 * pizzal }} €</div>
+        {{ pizzal }} x Pizza L
+      </div>
+      <div class="item" v-if="pizzam > 0">
+        <div class="ui red label">{{ 6 * pizzam }} €</div>
+        {{ pizzam }} x Pizza M
+      </div>
+      <div class="item" v-if="kebab > 0">
+        <div class="ui red label">{{ 5 * kebab }} €</div>
+        {{ kebab }} x Kebab / Tacos
+      </div>
+      <div class="item" v-if="croques > 0">
+        <div class="ui red label">{{ prixcroques }} €</div>
+        {{ croques }} x Croques MR {{ textcroques }}
+      </div>
+      <div class="item" v-if="sand > 0">
+        <div class="ui red label">{{ prixsand }} €</div>
+        {{ sand }} x Sandwichs {{ textsand }}
+      </div>
+      <div class="item" v-if="sandsam > 0">
+        <div class="ui red label">{{ prixsandsam }} €</div>
+        {{ sandsam }} x Sandwichs (Samedi) {{ textsandsam }}
+      </div>
+      <div class="item" v-if="prixlivraison > 0">
+        <div class="ui red label">{{ prixlivraison }} €</div>
+        Livraison de {{ textlivraison }}
+      </div>
+      <div class="item">
+          <div class="ui blue label">{{ total }} €</div>
+          Prix final
+      </div>
+    </div>
+
+     <h3 id="res">Total : {{ total }} €</h3>
+    </div>
+  </div>
+  </div>    
+
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="script.js"></script>
+  </body>
+</html>
